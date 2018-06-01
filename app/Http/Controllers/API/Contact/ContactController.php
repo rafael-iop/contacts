@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Contact;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SaveContactRequest;
+use App\Http\Requests\Contact\SaveContactRequest;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 
@@ -56,7 +56,7 @@ class ContactController extends Controller
     {
         $contact->update($request->all());
 
-        return response()->json([]);
+        return response()->json($contact);
     }
 
     /**
