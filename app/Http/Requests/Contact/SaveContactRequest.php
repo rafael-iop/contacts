@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Contact;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SaveContactRequest extends FormRequest
 {
@@ -24,10 +25,40 @@ class SaveContactRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'phone' => ['required', 'string', 'max:15'],
+            'name' => [
+                'required', 
+                'string', 
+                'max:255'
+            ],
+
+            'last_name' => [
+                'required', 
+                'string', 
+                'max:255'
+            ],
+
+            'email' => [
+                'required', 
+                'string', 
+                'email', 
+                'max:255',
+                Rule::unique('contacts')
+                    ->ignore($this->route('contact'))
+                    ->where(function ($query) {
+                        return $query->whereNull('deleted_at');
+                    })
+            ],
+
+            'phone' => [
+                'required', 
+                'string', 
+                'max:15',
+                Rule::unique('contacts')
+                    ->ignore($this->route('contact'))
+                    ->where(function ($query) {
+                        return $query->whereNull('deleted_at');
+                    })
+            ],
         ];
     }
 }

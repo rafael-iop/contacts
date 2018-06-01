@@ -24,7 +24,11 @@ class SaveMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => ['required', 'string', 'max:2000'],
+            'description' => [
+                'required', 
+                'string', 
+                'max:2000'
+            ],
         ];
     }
 }

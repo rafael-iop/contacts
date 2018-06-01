@@ -13,10 +13,10 @@ class ContactController extends Controller
     /**
      * Display a listing of contacts.
      *
-     * @param  Illuminate\Http\Request $request
+     * @param  \App\Http\Requests\Core\OrderRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, OrderRequest $orderRequest)
+    public function index(OrderRequest $request)
     {
         $contacts = Contact::search($request)
             ->orderByFullName($request->orderDirection ?? 'asc')

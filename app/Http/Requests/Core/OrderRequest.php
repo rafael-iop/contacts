@@ -25,7 +25,10 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'orderDirection' => ['max:4', Rule::in(['asc', 'desc'])],
+            'orderDirection' => [
+                'max:4', 
+                Rule::in(['asc', 'desc'])
+            ],
         ];
     }
 
