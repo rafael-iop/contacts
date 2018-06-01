@@ -16,7 +16,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::orderBy('name')->get();
+        $contacts = Contact::orderBy('name')->paginate();
 
         return response()->json($contacts);
     }

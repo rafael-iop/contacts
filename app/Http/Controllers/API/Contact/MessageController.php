@@ -20,7 +20,7 @@ class MessageController extends Controller
     {
         $messages = $contact->messages()
             ->orderBy('created_at')
-            ->get();
+            ->paginate();
 
         return response()->json($messages);
     }
