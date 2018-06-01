@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Contact;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Contact\SaveContactRequest;
 use App\Http\Requests\Core\OrderRequest;
+use App\Http\Resources\Contact\ContactResource;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 
@@ -23,7 +24,7 @@ class ContactController extends Controller
             ->paginate()
             ->appends($request->only(['search', 'orderDirection']));
 
-        return response()->json($contacts);
+        return ContactResource::collection($contacts);
     }
 
     /**
@@ -36,7 +37,7 @@ class ContactController extends Controller
     {
         $contact = Contact::create($request->all());
 
-        return response()->json($contact);
+        return new ContactResource($contact);
     }
 
     /**
@@ -47,7 +48,7 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
-        return response()->json($contact);
+        return new ContactResource($contact);
     }
 
     /**
@@ -61,7 +62,7 @@ class ContactController extends Controller
     {
         $contact->update($request->all());
 
-        return response()->json($contact);
+        return new ContactResource($contact);
     }
 
     /**

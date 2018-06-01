@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Contact;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Contact\SaveMessageRequest;
+use App\Http\Resources\Contact\MessageResource;
 use App\Models\Contact;
 use App\Models\Message;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class MessageController extends Controller
             ->orderBy('created_at')
             ->paginate();
 
-        return response()->json($messages);
+        return MessageResource::collection($messages);
     }
 
     /**
@@ -36,7 +37,7 @@ class MessageController extends Controller
     {
         $message = $contact->messages()->create($request->all());
 
-        return response()->json($message);
+        return new MessageResource($message);
     }
 
     /**
@@ -48,7 +49,7 @@ class MessageController extends Controller
      */
     public function show(Contact $contact, Message $message)
     {
-        return response()->json($message);
+        return new MessageResource($message);
     }
 
     /**
@@ -63,7 +64,7 @@ class MessageController extends Controller
     {
         $message->update($request->all());
 
-        return response()->json($message);
+        return new MessageResource($message);
     }
 
     /**
@@ -77,7 +78,7 @@ class MessageController extends Controller
     {
         $message->delete();
 
-        return response()->json([]);
+        return new MessageResource($message);
     }
 
 }
