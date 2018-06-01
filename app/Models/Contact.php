@@ -29,4 +29,24 @@ class Contact extends Model
         return $this->hasMany(\App\Models\Message::class);
     }
 
+    /**
+     * Get contact full name.
+     * 
+     * @return string
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->name . ' ' . $this->last_name;
+    }
+
+    /**
+     * Generates an avatar url based in contact email (Gravatar) or full name (UI Avatars).
+     * 
+     * @return string
+     */
+    public function getAvatarUrlAttribute(): string
+    {
+        return gravatar_or_fallback($this->email, $this->full_name);
+    }
+
 }
