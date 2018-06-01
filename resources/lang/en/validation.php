@@ -125,8 +125,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'orderDirection' => [
+            'in' => 'The :attribute must be "asc" or "desc".',
         ],
     ],
 

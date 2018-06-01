@@ -29,16 +29,4 @@ class OrderRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            'orderDirection.in' => 'O campo :attribute deve ser "asc" ou "desc".',
-        ];
-    }
-
 }

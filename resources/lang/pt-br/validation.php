@@ -101,8 +101,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'orderDirection' => [
+            'in' => 'O campo :attribute deve ser "asc" ou "desc".',
         ],
     ],
 

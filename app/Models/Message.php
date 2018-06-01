@@ -18,6 +18,10 @@ class Message extends Model
         'description' 
     ];
 
+    // ---------------------------------
+    // --------- RELATIONSHIPS ---------
+    // ---------------------------------
+
     /**
      * Get the contact that owns the message.
      */
