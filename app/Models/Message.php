@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Contact extends Model
+class Message extends Model
 {
     use SoftDeletes;
 
@@ -15,18 +15,16 @@ class Contact extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 
-        'last_name', 
-        'email', 
-        'phone',
+        'contact_id',
+        'description' 
     ];
 
     /**
-     * Get contact messages.
+     * Get the contact that owns the message.
      */
-    public function messages()
+    public function contact()
     {
-        return $this->hasMany(\App\Models\Message::class);
+        return $this->belongsTo(\App\Models\Contact::class);
     }
-
+    
 }
