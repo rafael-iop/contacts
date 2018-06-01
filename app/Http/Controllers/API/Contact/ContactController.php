@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Contact;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Contact\SaveContactRequest;
+use App\Http\Requests\Core\OrderRequest;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 
@@ -12,11 +13,15 @@ class ContactController extends Controller
     /**
      * Display a listing of contacts.
      *
+     * @param  Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, OrderRequest $orderRequest)
     {
-        $contacts = Contact::orderBy('name')->paginate();
+        $contacts = Contact::search($request)
+            ->orderByFullName($request->orderDirection ?? 'asc')
+            ->paginate()
+            ->appends($request->only(['search', 'orderDirection']));
 
         return response()->json($contacts);
     }
