@@ -37,7 +37,7 @@ class MessageController extends Controller
     {
         $message = $contact->messages()->create($request->all());
 
-        return new MessageResource($message);
+        return response()->json(['id' => $message->id], 201);
     }
 
     /**
@@ -64,7 +64,7 @@ class MessageController extends Controller
     {
         $message->update($request->all());
 
-        return new MessageResource($message);
+        return response()->json();
     }
 
     /**
@@ -78,7 +78,7 @@ class MessageController extends Controller
     {
         $message->delete();
 
-        return new MessageResource($message);
+        return response()->json();
     }
 
 }
