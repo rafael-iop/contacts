@@ -8,6 +8,6 @@ $factory->define(App\Models\Message::class, function (Faker $faker) {
     	'contact_id' => function () {
             return factory(App\Models\Contact::class)->create()->id;
         },
-    	'description' => $faker->text(rand(1, 2000)),
+    	'description' => $faker->text(rand(5, 2000)),
     ];
 });
