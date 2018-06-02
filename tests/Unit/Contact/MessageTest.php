@@ -10,6 +10,8 @@ use Tests\Unit\CrudInterface;
 
 class MessageTest extends TestCase implements CrudInterface
 {
+    use RefreshDatabase;
+    
     private $table = 'messages';
 
     /**

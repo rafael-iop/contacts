@@ -9,6 +9,8 @@ use Tests\Unit\CrudInterface;
 
 class ContactTest extends TestCase implements CrudInterface
 {
+    use RefreshDatabase;
+    
     private $table = 'contacts';
 
     /**

@@ -37,7 +37,7 @@ class ContactController extends Controller
     {
         $contact = Contact::create($request->all());
 
-        return new ContactResource($contact);
+        return response()->json(['id' => $contact->id], 201);
     }
 
     /**
@@ -62,7 +62,7 @@ class ContactController extends Controller
     {
         $contact->update($request->all());
 
-        return new ContactResource($contact);
+        return response()->json();
     }
 
     /**
@@ -75,7 +75,7 @@ class ContactController extends Controller
     {
         $contact->delete();
 
-        return response()->json([]);
+        return response()->json();
     }
 
 }
