@@ -17,7 +17,7 @@ class ContactTest extends TestCase
      */
     public function testIndex()
     {
-        $response = $this->json('GET', route('api.contacts.index'));
+        $response = $this->json('GET', 'api/contacts');
         $response->assertStatus(200);
     }
 
@@ -30,7 +30,7 @@ class ContactTest extends TestCase
     {
         $contact = factory(Contact::class)->make();
 
-        $response = $this->json('POST', route('api.contacts.store'), $contact->toArray());
+        $response = $this->json('POST', 'api/contacts', $contact->toArray());
         $response->assertStatus(201);
     }
 
@@ -43,7 +43,7 @@ class ContactTest extends TestCase
     {
         $contact = factory(Contact::class)->create();
 
-        $response = $this->json('GET', route('api.contacts.show', $contact));
+        $response = $this->json('GET', "api/contacts/{$contact->id}");
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -72,7 +72,7 @@ class ContactTest extends TestCase
             'phone' => '(41) 12345-6789'
         ];
 
-        $response = $this->json('PUT', route('api.contacts.update', $contact), $updatedData);
+        $response = $this->json('PUT', "api/contacts/{$contact->id}", $updatedData);
         $response->assertStatus(200);
 
         $contact = $contact->refresh();
@@ -91,7 +91,7 @@ class ContactTest extends TestCase
     {
         $contact = factory(Contact::class)->create();
 
-        $response = $this->json('DELETE', route('api.contacts.destroy', $contact));
+        $response = $this->json('DELETE', "api/contacts/{$contact->id}");
         $response->assertStatus(200);
 
         $contact = $contact->refresh();
