@@ -9,11 +9,14 @@ Contact list API built with Laravel.
 composer install
 ```
 
-- Configure your `.env` file with database data.
+- Configure your `.env` file with database data and generate an `APP_KEY`:
+```
+php artisan key:generate
+```
 
 - Run migrations and seeds:
 ```
-php artisan migrate:fresh --seeds
+php artisan migrate:fresh --seed
 ```
 
 - Start server:
