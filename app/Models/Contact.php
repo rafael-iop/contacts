@@ -110,10 +110,7 @@ class Contact extends Model
      */
     public function scopeSearchByName($query, $name)
     {
-        return $query->where(function ($query) use ($name) {
-            $query->where('name', 'like', '%' . $name . '%');
-            $query->orWhere('last_name', 'like', '%' . $name . '%');
-        });
+        return $query->whereRaw('MATCH (name,last_name) AGAINST (?)', [$name]);
     }
 
     /**

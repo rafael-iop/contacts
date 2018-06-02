@@ -12,7 +12,7 @@ class ContactTest extends TestCase implements CrudInterface
     private $table = 'contacts';
 
     /**
-     * A basic test example.
+     * Check if contact can be created.
      *
      * @return void
      */
@@ -26,6 +26,11 @@ class ContactTest extends TestCase implements CrudInterface
         $this->assertDatabaseHas($this->table, $contact->toArray());
     }
 
+    /**
+     * Check if contact can be read.
+     *
+     * @return void
+     */
     public function testRead() 
     {
         $contact = factory(Contact::class)->create();
@@ -34,6 +39,11 @@ class ContactTest extends TestCase implements CrudInterface
         $this->assertInstanceOf(Contact::class, $contactFound);
     }
 
+    /**
+     * Check if contact can be updated.
+     *
+     * @return void
+     */
     public function testUpdate() 
     {
         $contact = factory(Contact::class)->create();
@@ -52,6 +62,11 @@ class ContactTest extends TestCase implements CrudInterface
         $this->assertEquals($updatedData['phone'], $contact->phone);
     }
 
+    /**
+     * Check if contact can be deleted.
+     *
+     * @return void
+     */
     public function testDelete() 
     {
         $contact = factory(Contact::class)->create();
@@ -59,6 +74,81 @@ class ContactTest extends TestCase implements CrudInterface
 
         $this->assertTrue($deleted);
         $this->assertSoftDeleted($this->table, ['id' => $contact->id]);
+    }
+
+    /**
+     * Check if setEmailAttribute() model mutator is working.
+     * 
+     * @return void
+     */
+    public function testSetLowerCaseEmail()
+    {
+        $contact = factory(Contact::class)->create([
+            'email' => 'EMAIL@TEST.COM'
+        ]);
+
+        $this->assertEquals('email@test.com', $contact->email);
+    }
+
+    /**
+     * Test contact search by full name.
+     * 
+     * @return void
+     */
+    public function testSearchByName()
+    {
+        $contact = factory(Contact::class)->create([
+            'name' => 'João',
+            'last_name' => 'Silva'
+        ]);
+
+        // Assert it has at least one result
+        $searchResult = Contact::searchByName('João Silva')->get();
+        $this->assertGreaterThanOrEqual(1, $searchResult->count());
+
+        // Assert it doesn't have results
+        $searchResult = Contact::searchByName('João Paulo')->get();
+        $this->assertEquals(0, $searchResult->count());
+    }
+
+    /**
+     * Test contact search by email address.
+     * 
+     * @return void
+     */
+    public function testSearchByEmail()
+    {
+        $contact = factory(Contact::class)->create([
+            'email' => 'email@test.com'
+        ]);
+
+        // Assert it has at least one result
+        $searchResult = Contact::searchByEmail('email@test.com')->get();
+        $this->assertGreaterThanOrEqual(1, $searchResult->count());
+
+        // Assert it doesn't have results
+        $searchResult = Contact::searchByEmail('email@test.com.br')->get();
+        $this->assertEquals(0, $searchResult->count());
+    }
+
+    /**
+     * Test contact search by email phone number.
+     * 
+     * @return void
+     */
+    public function testSearchByPhone()
+    {
+        $contact = factory(Contact::class)->create([
+            'phone' => '(41) 12345-6789'
+        ]);
+
+        // Assert it has at least one result
+        $searchResult = Contact::searchByPhone('(41) 12345-6789')->get();
+        $this->assertGreaterThanOrEqual(1, $searchResult->count());
+
+        // Assert it doesn't have results
+        $searchResult = Contact::searchByPhone('(42) 12345-6789')->get();
+        $this->assertEquals(0, $searchResult->count());
     }
 
 }
