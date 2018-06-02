@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateContactsTable extends Migration
@@ -23,8 +22,6 @@ class CreateContactsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-        DB::statement('ALTER TABLE contacts ADD FULLTEXT full_name(name, last_name)');
     }
 
     /**
