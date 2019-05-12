@@ -93,27 +93,6 @@ class ContactTest extends TestCase implements CrudInterface
     }
 
     /**
-     * Test contact search by full name.
-     * 
-     * @return void
-     */
-    public function testSearchByName()
-    {
-        $contact = factory(Contact::class)->create([
-            'name' => 'João',
-            'last_name' => 'Silva'
-        ]);
-
-        // Assert it has at least one result
-        $searchResult = Contact::searchByName('João Silva')->get();
-        $this->assertGreaterThanOrEqual(1, $searchResult->count());
-
-        // Assert it doesn't have results
-        $searchResult = Contact::searchByName('João Paulo')->get();
-        $this->assertEquals(0, $searchResult->count());
-    }
-
-    /**
      * Test contact search by email address.
      * 
      * @return void
